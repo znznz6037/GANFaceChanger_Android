@@ -8,9 +8,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="GAN 페이스 체인지"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/face"
+        android:label="GAN Face Change"
+        android:roundIcon="@drawable/face"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
