@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.pal_grad.fragment.ResourceStore
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)

@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.pal_grad.R
 
-class MyFragment : Fragment() {
+class Selfie2Anime : Fragment() {
     override fun onCreateView (
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.my_fragment, container)
+        return inflater.inflate(R.layout.intro, container)
     }
 
     companion object {
-        fun create(): MyFragment {
-            return MyFragment()
+        fun create(): Intro {
+            return Intro()
         }
     }
 }
