@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.pal_grad.MainActivity
 import com.example.pal_grad.R
 import kotlinx.android.synthetic.main.face_change_fragment.*
 import kotlinx.android.synthetic.main.face_change_fragment.view.*
@@ -27,8 +28,11 @@ class FaceChange : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view:View = inflater!!.inflate(R.layout.face_change_fragment, container, false)
-        view.face_upload_button.setOnClickListener { view->
+        view.face_upload_button.setOnClickListener {
             openGalleryForImage()
+        }
+        view.api_test.setOnClickListener {
+            (activity as MainActivity).apiTest()
         }
         return view
     }
