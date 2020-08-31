@@ -17,17 +17,6 @@
             android:layout_height="wrap_content"
             tools:srcCompat="@drawable/app_icon" />
 
-        <Button
-            android:id="@+id/face_upload_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이미지 업로드" />
-
-        <Button
-            android:id="@+id/api_test"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
