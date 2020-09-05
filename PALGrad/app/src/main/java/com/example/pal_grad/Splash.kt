@@ -1,8 +1,10 @@
 package com.example.pal_grad
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 
@@ -15,8 +17,12 @@ class Splash : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.splash_activity)
-        val hd = Handler()
-        hd.postDelayed(SplashHandler(), 3000)
+        this.window.apply {
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = Color.WHITE
+        }
+        val handler = Handler()
+        handler.postDelayed(SplashHandler(), 3000)
     }
 
     private inner class SplashHandler : Runnable {

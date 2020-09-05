@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">얼체</string>
+    <string name="icon">아이콘</string>
+    <string name="image">이미지</string>
+    <string name="uploadImage">이미지 업로드</string>
+    <string name="exec">실행</string>
+    <string name="intro">부산대학교 정보컴퓨터공학부 2020 전기 졸업과제\n\n201524462 박세범\n201524499 안형진\n201624539 이동현\n\n</string>
+    <string name="github">Our GitHub repository on\nhttps://github.com/znznz6037/GANFaceChanger</string>
 </resources>

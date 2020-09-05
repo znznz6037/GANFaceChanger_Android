@@ -31,24 +31,23 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 class FaceChange : Fragment() {
-    private val OPEN_GALLERY = 1
-    private var str : String? = null
+    private val openGallery = 1
     private var uriPath : String?  = ""
 
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        startActivityForResult(intent, OPEN_GALLERY)
+        startActivityForResult(intent, openGallery)
     }
 
     private fun getRealPathFromURI(uri: Uri?): String? {
         val projection =
             arrayOf(MediaStore.Images.Media.DATA)
         val cursor: Cursor? = activity?.managedQuery(uri, projection, null, null, null)
-        val column_index = cursor
+        val columnIndex = cursor
             ?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
         cursor?.moveToFirst()
-        return column_index?.let { cursor?.getString(it) }
+        return columnIndex?.let { cursor?.getString(it) }
     }
 
     override fun onCreateView (
@@ -57,29 +56,25 @@ class FaceChange : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view:View = inflater!!.inflate(R.layout.face_change_fragment, container, false)
-        view.face_upload_button.setOnClickListener {
+        view.faceImageView.setOnClickListener {
             openGalleryForImage()
         }
-        view.api_test.setOnClickListener {
-            apiTest()
+        view.exec_StarGAN_button.setOnClickListener {
+            execStarGAN()
         }
         return view
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == OPEN_GALLERY){
-            faceImageView.setImageURI(data?.data) // handle chosen image
-            //uriPath = data?.data.toString()
-            //Log.d("uri", data?.data.toString())
+        if (resultCode == Activity.RESULT_OK && requestCode == openGallery){
+            faceImageView.setImageURI(data?.data)
             val selectedImageUri = data!!.data
             uriPath = getRealPathFromURI(selectedImageUri)
-            //uriPath = data?.data.toString()
-            Log.d("uri", uriPath)
         }
     }
 
-    fun apiTest(){
+    private fun execStarGAN(){
         val url = "https://psbgrad.duckdns.org:5000"
         val file = File(uriPath)
         Log.d("filename : ", file.toString())

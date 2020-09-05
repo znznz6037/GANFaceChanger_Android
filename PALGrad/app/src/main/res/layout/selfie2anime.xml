@@ -5,20 +5,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:id="@+id/faceImageView"
-        android:layout_width="wrap_content"
+        android:id="@+id/animeImageView"
+        android:layout_width="300dp"
         android:layout_height="300dp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/image_border"
         android:contentDescription="@string/image"
         android:src="@drawable/app_icon"
+        android:background="@drawable/image_border"
+        android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/exec_StarGAN_button"
+        android:id="@+id/exec_UGATIT_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -26,6 +27,6 @@
         android:text="@string/exec"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/faceImageView" />
+        app:layout_constraintTop_toBottomOf="@id/animeImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

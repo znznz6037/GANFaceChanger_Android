@@ -10,7 +10,8 @@
         android:id="@+id/main_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/dohyeon"
         android:text="@string/app_name"
         android:textColor="#212121"
         android:textSize="40sp"
@@ -23,9 +24,12 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_title"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_title"
+        app:tabTextAppearance="@style/tab_text"
+        app:tabTextColor="@color/colorPrimaryDark"/>
 
     <LinearLayout
         android:id="@+id/linear"
