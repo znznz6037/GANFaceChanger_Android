@@ -3,17 +3,22 @@ package com.example.pal_grad.fragment
 import android.app.Activity
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.pal_grad.R
 import com.example.pal_grad.api.StarGANAPI
 import com.example.pal_grad.api.StarGANPost
+import com.example.pal_grad.api.StarGANResult
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.face_change_fragment.*
@@ -27,12 +32,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.concurrent.TimeUnit
 
 class FaceChange : Fragment() {
     private val openGallery = 1
     private var uriPath : String?  = ""
+    lateinit var base64: String
 
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
@@ -60,7 +67,7 @@ class FaceChange : Fragment() {
             openGalleryForImage()
         }
         view.exec_StarGAN_button.setOnClickListener {
-            execStarGAN()
+            uploadImage()
         }
         return view
     }
@@ -74,46 +81,64 @@ class FaceChange : Fragment() {
         }
     }
 
-    private fun execStarGAN(){
-        val url = "https://psbgrad.duckdns.org:5000"
-        val file = File(uriPath)
-        Log.d("filename : ", file.toString())
+    private fun uploadImage(){
+        var file = File(uriPath)
         val requestBody : RequestBody = RequestBody.create(MediaType.parse("CONTENT_TYPE"), file)
         val body : MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestBody)
 
-        val gson : Gson = GsonBuilder()
-            .setLenient()
-            .create()
+        val call = StarGANAPI().instance().upload("스타일 선택", body)
 
-        val okHttpClient: OkHttpClient = OkHttpClient.Builder()
-            .connectTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
-            .build()
+        call.enqueue(object : retrofit2.Callback<StarGANPost>{
+            // handling request saat fail
+            override fun onFailure(call: retrofit2.Call<StarGANPost>?, t: Throwable?) {
+                Toast.makeText(activity,"Connection error", Toast.LENGTH_SHORT).show()
+                Log.d("ONFAILURE",t.toString())
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(url)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-
-        val api = retrofit.create(StarGANAPI::class.java)
-
-        api.uploadImage("스타일 선택", body).enqueue(object : Callback<StarGANPost> {
-            override fun onResponse(
-                call: Call<StarGANPost>,
-                response: Response<StarGANPost>
-            ) {
-                Log.d("결과", "성공 : ${response.body().toString()}")
             }
+            // handling request saat response.
+            override fun onResponse(call: retrofit2.Call<StarGANPost>?, response: Response<StarGANPost>?) {
+                // menampilkan pesan yang diambil dari response.
+                Toast.makeText(activity, "로딩이 완료되었습니다", Toast.LENGTH_SHORT).show()
+                getBase64()
+            }
+        })
+    }
 
-            override fun onFailure(call: Call<StarGANPost>, t: Throwable) {
+    fun getBase64(){
+        val call = StarGANAPI().instance().getResult()
+        call.enqueue(object : retrofit2.Callback<StarGANResult> {
+
+            override fun onResponse(
+                call: retrofit2.Call<StarGANResult>,
+                response: Response<StarGANResult>
+            ) {
+                Log.d("결과:", "성공 : ${response.body().toString()}")
+                var base64_All = response?.body().toString()
+                base64 = base64_All.replace("StarGANResult(img=", "")
+                faceImageView.setImageBitmap(convertString64ToImage(resizeBase64Image(base64)))
+            }
+            override fun onFailure(call: retrofit2.Call<StarGANResult>, t: Throwable) {
                 Log.d("결과:", "실패 : $t")
             }
         })
     }
 
+    fun resizeBase64Image(base64image: String): String {
+        val encodeByte: ByteArray = Base64.decode(base64image.toByteArray(), Base64.DEFAULT)
+        val options = BitmapFactory.Options()
+        var image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size, options)
+        image = Bitmap.createScaledBitmap(image, 1024, 600, false)
+        val baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val b = baos.toByteArray()
+        System.gc()
+        return Base64.encodeToString(b, Base64.NO_WRAP)
+    }
 
+    private fun convertString64ToImage(base64String: String): Bitmap {
+        val decodedString = Base64.decode(base64String, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+    }
 
     companion object {
         fun create(): FaceChange {

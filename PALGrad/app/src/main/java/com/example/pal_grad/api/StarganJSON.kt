@@ -8,3 +8,7 @@ data class StarGANPost(
     var style: String = "스타일 선택",
     var file: String = ""
 )
+
+data class AnimePost(
+    var file: String = ""
+)
