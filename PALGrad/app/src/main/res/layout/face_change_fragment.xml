@@ -4,38 +4,57 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/faceImageView"
+    <TextView
+        android:id="@+id/stargan_text"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_marginTop="20dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/image_border"
-        android:contentDescription="@string/image"
-        android:src="@drawable/app_icon"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/dohyeon"
+        android:gravity="center"
+        android:text="@string/stargan_intro"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spin_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textAlignment="center"
+    <ImageView
+        android:id="@+id/faceImageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:background="@drawable/image_border"
+        android:contentDescription="@string/image"
+        android:src="@drawable/app_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/faceImageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/exec_StarGAN_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:layout_marginTop="20dp"
+        android:background="@drawable/round_button"
         android:fontFamily="@font/dohyeon"
         android:text="@string/exec"
+        app:layout_constraintStart_toEndOf="@id/spin_style"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spin_style"/>
+        app:layout_constraintTop_toBottomOf="@id/faceImageView" />
 
+    <Spinner
+        android:id="@+id/spin_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:entries="@array/styleList"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:theme="@style/SpinnerFont"
+        app:layout_constraintBottom_toBottomOf="@id/exec_StarGAN_button"
+        app:layout_constraintEnd_toStartOf="@id/exec_StarGAN_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/exec_StarGAN_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

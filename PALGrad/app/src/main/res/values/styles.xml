@@ -10,4 +10,8 @@
         <item name="android:fontFamily">@font/dohyeon</item>
     </style>
 
+    <style name="SpinnerFont">
+        <item name="android:fontFamily">@font/dohyeon</item>
+    </style>
+
 </resources>

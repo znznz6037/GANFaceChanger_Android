@@ -1,11 +1,14 @@
 package com.example.pal_grad.fragment
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,10 +17,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.pal_grad.R
 import com.example.pal_grad.api.StarGANAPI
@@ -71,7 +71,7 @@ class FaceChange : Fragment() {
         val view:View = inflater!!.inflate(R.layout.face_change_fragment, container, false)
         //spinner
         val items = resources.getStringArray(R.array.styleList)
-        val myAdapter = ArrayAdapter(activity as Context, android.R.layout.simple_spinner_dropdown_item, items)
+        val myAdapter = ArrayAdapter(activity as Context, R.layout.spinner_font, items)
         view.spin_style.adapter = myAdapter
         view.spin_style.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -128,18 +128,27 @@ class FaceChange : Fragment() {
 
         val call = StarGANAPI().instance().upload(requestBody2, body)
 
+        val view = layoutInflater.inflate(R.layout.loading, null)
+
+        val loadingDialog = AlertDialog.Builder(context!!)
+            .create()
+
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        loadingDialog.setView(view)
+        loadingDialog.show()
+
         call.enqueue(object : retrofit2.Callback<StarGANPost>{
             // handling request saat fail
             override fun onFailure(call: retrofit2.Call<StarGANPost>?, t: Throwable?) {
                 Toast.makeText(activity,"Connection error", Toast.LENGTH_SHORT).show()
                 Log.d("ONFAILURE",t.toString())
-
+                loadingDialog.dismiss()
             }
             // handling request saat response.
             override fun onResponse(call: retrofit2.Call<StarGANPost>?, response: Response<StarGANPost>?) {
                 // menampilkan pesan yang diambil dari response.
-                Toast.makeText(activity, "로딩이 완료되었습니다", Toast.LENGTH_SHORT).show()
                 getBase64()
+                loadingDialog.dismiss()
             }
         })
     }
@@ -155,7 +164,20 @@ class FaceChange : Fragment() {
                 Log.d("결과:", "성공 : ${response.body().toString()}")
                 var base64_All = response?.body().toString()
                 base64 = base64_All.replace("StarGANResult(img=", "")
-                faceImageView.setImageBitmap(convertString64ToImage(resizeBase64Image(base64)))
+                val view = layoutInflater.inflate(R.layout.stargan_popup, null)
+                val alertDialog = AlertDialog.Builder(context!!)
+                    .create()
+
+                val img = view.findViewById<ImageView>(R.id.stargan_popup_image)
+                img.setImageBitmap(convertString64ToImage(resizeBase64Image(base64)))
+                val exitBtn = view.findViewById<Button>(R.id.stargan_exit_button)
+                exitBtn.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+
+                alertDialog.setView(view)
+                alertDialog.window!!.setBackgroundDrawableResource(R.drawable.rounded)
+                alertDialog.show()
             }
             override fun onFailure(call: retrofit2.Call<StarGANResult>, t: Throwable) {
                 Log.d("결과:", "실패 : $t")

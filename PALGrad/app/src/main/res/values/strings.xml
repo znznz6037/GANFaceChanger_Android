@@ -4,6 +4,13 @@
     <string name="image">이미지</string>
     <string name="uploadImage">이미지 업로드</string>
     <string name="exec">실행</string>
-    <string name="intro">부산대학교 정보컴퓨터공학부 2020 전기 졸업과제\n\n201524462 박세범\n201524499 안형진\n201624539 이동현\n\n</string>
+    <string name="exit">나가기</string>
+    <string name="save">저장</string>
+    <string name="result">결과</string>
+    <string name="loading">로딩 중입니다...</string>
+    <string name="stargan_intro">적용하고 싶은 특성을 선택하고\n실행 버튼을 눌러 얼굴을 바꿔 보세요.</string>
+    <string name="ugatit_intro">애니메이션 속의 나는?</string>
+    <string name="intro_title">부산대학교 정보컴퓨터공학부\n2020 전기 졸업과제</string>
+    <string name="people">201524462 박세범\n201524499 안형진\n201624539 이동현</string>
     <string name="github">Our GitHub repository on\nhttps://github.com/znznz6037/GANFaceChanger</string>
 </resources>
