@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="styleList">
+        <item>스타일 선택</item>
+        <item>하얀  피부</item>
+        <item>염소 수염</item>
+        <item>안경</item>
+        <item>미소</item>
+        <item>화장</item>
+    </string-array>
+
+</resources>

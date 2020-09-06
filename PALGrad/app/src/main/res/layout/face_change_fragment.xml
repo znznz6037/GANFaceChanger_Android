@@ -17,6 +17,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spin_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/faceImageView" />
+
     <Button
         android:id="@+id/exec_StarGAN_button"
         android:layout_width="wrap_content"
@@ -26,6 +36,6 @@
         android:text="@string/exec"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/faceImageView" />
+        app:layout_constraintTop_toBottomOf="@id/spin_style"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

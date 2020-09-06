@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -52,6 +53,6 @@ interface StarGANAPIInterface {
     @Multipart
     @POST("upload")
     fun upload(
-        @Part("style") style: String,
+        @Part ("style") style: RequestBody,
         @Part file:MultipartBody.Part):Call<StarGANPost>
 }

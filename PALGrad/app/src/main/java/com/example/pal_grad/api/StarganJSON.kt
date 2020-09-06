@@ -5,10 +5,6 @@ data class StarGANResult(
 )
 
 data class StarGANPost(
-    var style: String = "스타일 선택",
-    var file: String = ""
-)
-
-data class AnimePost(
+    var style: String = "",
     var file: String = ""
 )

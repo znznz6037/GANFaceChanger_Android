@@ -1,6 +1,7 @@
 package com.example.pal_grad.fragment
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
@@ -13,6 +14,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.pal_grad.R
@@ -40,6 +44,8 @@ class FaceChange : Fragment() {
     private val openGallery = 1
     private var uriPath : String?  = ""
     lateinit var base64: String
+    lateinit var style: String
+
 
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
@@ -63,8 +69,40 @@ class FaceChange : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view:View = inflater!!.inflate(R.layout.face_change_fragment, container, false)
+        //spinner
+        val items = resources.getStringArray(R.array.styleList)
+        val myAdapter = ArrayAdapter(activity as Context, android.R.layout.simple_spinner_dropdown_item, items)
+        view.spin_style.adapter = myAdapter
+        view.spin_style.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when(p2) {
+                    0 -> {
+                        style = "스타일 선택"
+                    }
+                    1 -> {
+                        style = "하얀 피부"
+                    }
+                    2 -> {
+                        style = "염소 수염"
+                    }
+                    3 -> {
+                        style = "안경"
+                    }
+                    4 -> {
+                        style = "미소"
+                    }
+                    5 -> {
+                        style = "화장"
+                    }
+                }
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
         view.faceImageView.setOnClickListener {
             openGalleryForImage()
+
         }
         view.exec_StarGAN_button.setOnClickListener {
             uploadImage()
@@ -85,8 +123,10 @@ class FaceChange : Fragment() {
         var file = File(uriPath)
         val requestBody : RequestBody = RequestBody.create(MediaType.parse("CONTENT_TYPE"), file)
         val body : MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestBody)
+        val requestBody2 : RequestBody = RequestBody.create(okhttp3.MultipartBody.FORM, style);
 
-        val call = StarGANAPI().instance().upload("스타일 선택", body)
+
+        val call = StarGANAPI().instance().upload(requestBody2, body)
 
         call.enqueue(object : retrofit2.Callback<StarGANPost>{
             // handling request saat fail
