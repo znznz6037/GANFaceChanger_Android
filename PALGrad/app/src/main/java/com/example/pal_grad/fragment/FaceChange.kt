@@ -2,6 +2,7 @@ package com.example.pal_grad.fragment
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
@@ -208,12 +209,15 @@ class FaceChange : Fragment() {
     private fun galleryAddpic(bitmap: Bitmap) {
         val path = Environment.getExternalStorageDirectory().toString() + "/Pictures/얼체"
         val folder = File(path)
+        var intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+
         if(folder.exists()) {
 
         } else {
             folder.mkdir()
         }
         val file = File(path, "${UUID.randomUUID()}.jpeg")
+
         try {
             // Get the file output stream
             val stream: OutputStream = FileOutputStream(file)
@@ -223,6 +227,8 @@ class FaceChange : Fragment() {
             stream.flush()
             // Close the output stream
             stream.close()
+            intent.setData(Uri.fromFile(file))
+            context?.sendBroadcast(intent)
             Toast.makeText(activity,"이미지저장성공", Toast.LENGTH_SHORT).show()
         } catch (e: IOException){ // Catch the exception
             e.printStackTrace()
