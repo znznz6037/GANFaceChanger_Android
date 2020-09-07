@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
@@ -29,8 +30,8 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
-import java.io.ByteArrayOutputStream
-import java.io.File
+import java.io.*
+import java.util.*
 
 class Selfie2Anime : Fragment() {
     private val openGallery = 1
@@ -140,6 +141,10 @@ class Selfie2Anime : Fragment() {
                 exitBtn.setOnClickListener {
                     alertDialog.dismiss()
                 }
+                val saveBtn = view.findViewById<Button>(R.id.ugatit_save_button)
+                saveBtn.setOnClickListener{
+                    galleryAddpic(convertString64ToImage(resizeBase64Image(base64)))
+                }
 
                 alertDialog.setView(view)
                 alertDialog.window!!.setBackgroundDrawableResource(R.drawable.rounded)
@@ -161,6 +166,31 @@ class Selfie2Anime : Fragment() {
         val b = baos.toByteArray()
         System.gc()
         return Base64.encodeToString(b, Base64.NO_WRAP)
+    }
+
+    private fun galleryAddpic(bitmap: Bitmap) {
+        val path = Environment.getExternalStorageDirectory().toString() + "/Pictures/얼체"
+        val folder = File(path)
+        if(folder.exists()) {
+
+        } else {
+            folder.mkdir()
+        }
+        val file = File(path, "${UUID.randomUUID()}.jpeg")
+        try {
+            // Get the file output stream
+            val stream: OutputStream = FileOutputStream(file)
+            // Compress the bitmap
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            // Flush the output stream
+            stream.flush()
+            // Close the output stream
+            stream.close()
+            Toast.makeText(activity,"이미지 저장 성공", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException){ // Catch the exception
+            e.printStackTrace()
+            Toast.makeText(activity,"이미지저장실패", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun convertString64ToImage(base64String: String): Bitmap {

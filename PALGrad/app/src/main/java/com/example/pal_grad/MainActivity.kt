@@ -1,10 +1,15 @@
 package com.example.pal_grad
 
+import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
@@ -27,7 +32,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        finish()
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.exit_popup, null)
+        val textView: TextView = view.findViewById(R.id.alertContent)
+        textView.text = "정말 종료하시겠습니까?"
+
+        val alertDialog = AlertDialog.Builder(this)
+            .create()
+
+        val cancelBtn = view.findViewById<Button>(R.id.app_exit_cancel_button)
+        cancelBtn.setOnClickListener{
+            alertDialog.dismiss()
+        }
+
+        val exitBtn = view.findViewById<Button>(R.id.app_exit_button)
+        exitBtn.setOnClickListener{
+            finish()
+        }
+
+        alertDialog.setView(view)
+        alertDialog.show()
     }
 
     private fun setViewPager() {
