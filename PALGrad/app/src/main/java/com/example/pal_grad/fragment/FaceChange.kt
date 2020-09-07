@@ -132,9 +132,20 @@ class FaceChange : Fragment() {
         call.enqueue(object : retrofit2.Callback<StarGANPost>{
             // handling request saat fail
             override fun onFailure(call: retrofit2.Call<StarGANPost>?, t: Throwable?) {
-                Toast.makeText(activity,"Connection error", Toast.LENGTH_SHORT).show()
-                Log.d("ONFAILURE",t.toString())
                 loadingDialog.dismiss()
+
+                val errorView = layoutInflater.inflate(R.layout.ugatit_error, null)
+
+                val errorDialog = androidx.appcompat.app.AlertDialog.Builder(context!!)
+                    .create()
+
+                val exitBtn = errorView.findViewById<Button>(R.id.ugatit_error_exit_button)
+                exitBtn.setOnClickListener {
+                    errorDialog.dismiss()
+                }
+                errorDialog.setView(errorView)
+                errorDialog.window!!.setBackgroundDrawableResource(R.drawable.rounded)
+                errorDialog.show()
             }
             // handling request saat response.
             override fun onResponse(call: retrofit2.Call<StarGANPost>?, response: Response<StarGANPost>?) {
