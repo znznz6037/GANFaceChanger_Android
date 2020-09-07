@@ -4,10 +4,14 @@
     <string name="image">이미지</string>
     <string name="uploadImage">이미지 업로드</string>
     <string name="exec">실행</string>
-    <string name="exit">나가기</string>
+    <string name="exit">닫기</string>
+    <string name="error">에러</string>
+    <string name="ugatit_error_message">얼굴 인식에 실패하였습니다.\n다른 이미지를 올려주세요.</string>
     <string name="save">저장</string>
     <string name="result">결과</string>
-    <string name="loading">로딩 중입니다...</string>
+    <string name="stargan_loading">10초 정도만 기다려 주세요\n딥러닝 작업이 수행 중입니다...</string>
+    <string name="ugatit_loading">20초 정도만 기다려 주세요\n딥러닝 작업이 수행 중입니다...</string>
+    <string name="note">배경이 복잡하거나 여러 명이 나온 사진은 잘 인식이 안 됩니다.\n\n배경이 단조롭고 정면을 바라보고 있으며\n한 명만 나온 사진을 올려주세요.\n\n증명사진이 가장 결과가 좋습니다.</string>
     <string name="stargan_intro">적용하고 싶은 특성을 선택하고\n실행 버튼을 눌러 얼굴을 바꿔 보세요.</string>
     <string name="ugatit_intro">애니메이션 속의 나는?</string>
     <string name="intro_title">부산대학교 정보컴퓨터공학부\n2020 전기 졸업과제</string>

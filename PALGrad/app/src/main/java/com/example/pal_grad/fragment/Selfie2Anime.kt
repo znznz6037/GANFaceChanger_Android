@@ -84,7 +84,7 @@ class Selfie2Anime : Fragment() {
 
         val call = UgatitAPI().instance().upload(body)
 
-        val view = layoutInflater.inflate(R.layout.loading, null)
+        val view = layoutInflater.inflate(R.layout.ugatit_loading, null)
 
         val loadingDialog = AlertDialog.Builder(context!!)
             .create()
@@ -95,9 +95,20 @@ class Selfie2Anime : Fragment() {
 
         call.enqueue(object : retrofit2.Callback<UgatitPost>{
             override fun onFailure(call: retrofit2.Call<UgatitPost>?, t: Throwable?) {
-                Toast.makeText(activity,"Connection error", Toast.LENGTH_SHORT).show()
-                Log.d("ONFAILURE",t.toString())
                 loadingDialog.dismiss()
+
+                val errorView = layoutInflater.inflate(R.layout.ugatit_error, null)
+
+                val errorDialog = AlertDialog.Builder(context!!)
+                    .create()
+
+                val exitBtn = errorView.findViewById<Button>(R.id.ugatit_error_exit_button)
+                exitBtn.setOnClickListener {
+                    errorDialog.dismiss()
+                }
+                errorDialog.setView(errorView)
+                errorDialog.window!!.setBackgroundDrawableResource(R.drawable.rounded)
+                errorDialog.show()
             }
 
             override fun onResponse(call: retrofit2.Call<UgatitPost>?, response: Response<UgatitPost>?) {

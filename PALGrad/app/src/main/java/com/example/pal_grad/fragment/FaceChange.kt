@@ -23,22 +23,14 @@ import com.example.pal_grad.R
 import com.example.pal_grad.api.StarGANAPI
 import com.example.pal_grad.api.StarGANPost
 import com.example.pal_grad.api.StarGANResult
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.face_change_fragment.*
 import kotlinx.android.synthetic.main.face_change_fragment.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
 import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.util.concurrent.TimeUnit
 
 class FaceChange : Fragment() {
     private val openGallery = 1
@@ -128,7 +120,7 @@ class FaceChange : Fragment() {
 
         val call = StarGANAPI().instance().upload(requestBody2, body)
 
-        val view = layoutInflater.inflate(R.layout.loading, null)
+        val view = layoutInflater.inflate(R.layout.stargan_loading, null)
 
         val loadingDialog = AlertDialog.Builder(context!!)
             .create()
