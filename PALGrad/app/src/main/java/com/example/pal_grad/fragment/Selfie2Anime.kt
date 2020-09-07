@@ -171,8 +171,8 @@ class Selfie2Anime : Fragment() {
     private fun galleryAddpic(bitmap: Bitmap) {
         val path = Environment.getExternalStorageDirectory().toString() + "/Pictures/얼체"
         val folder = File(path)
+        var intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
         if(folder.exists()) {
-
         } else {
             folder.mkdir()
         }
@@ -186,6 +186,8 @@ class Selfie2Anime : Fragment() {
             stream.flush()
             // Close the output stream
             stream.close()
+            intent.setData(Uri.fromFile(file))
+            context?.sendBroadcast(intent)
             Toast.makeText(activity,"이미지 저장 성공", Toast.LENGTH_SHORT).show()
         } catch (e: IOException){ // Catch the exception
             e.printStackTrace()
