@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.exit_popup, null)
         val textView: TextView = view.findViewById(R.id.alertContent)
-        textView.text = "정말 종료하시겠습니까?"
+        textView.text = "종료하시겠습니까?"
 
         val alertDialog = AlertDialog.Builder(this)
             .create()
@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         alertDialog.setView(view)
+        alertDialog.window!!.setBackgroundDrawableResource(R.drawable.rounded)
         alertDialog.show()
     }
 

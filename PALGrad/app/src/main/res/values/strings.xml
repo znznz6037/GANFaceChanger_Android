@@ -5,6 +5,8 @@
     <string name="uploadImage">이미지 업로드</string>
     <string name="exec">실행</string>
     <string name="exit">닫기</string>
+    <string name="no">아니요</string>
+    <string name="terminate">종료</string>
     <string name="error">에러</string>
     <string name="ugatit_error_message">얼굴 인식에 실패하였습니다.\n다른 이미지를 올려주세요.</string>
     <string name="save">저장</string>
