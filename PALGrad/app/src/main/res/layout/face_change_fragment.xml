@@ -48,7 +48,7 @@
         android:id="@+id/spin_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
+        android:background="@drawable/spinner_design"
         android:entries="@array/styleList"
         android:gravity="center"
         android:textAlignment="center"
