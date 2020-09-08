@@ -97,19 +97,33 @@ class Selfie2Anime : Fragment() {
         call.enqueue(object : retrofit2.Callback<UgatitPost>{
             override fun onFailure(call: retrofit2.Call<UgatitPost>?, t: Throwable?) {
                 loadingDialog.dismiss()
+                if (uriPath == "") {
+                    val imageErrorView = layoutInflater.inflate(R.layout.image_error, null)
 
-                val errorView = layoutInflater.inflate(R.layout.ugatit_error, null)
+                    val imageErrorDialog = androidx.appcompat.app.AlertDialog.Builder(context!!)
+                        .create()
 
-                val errorDialog = AlertDialog.Builder(context!!)
-                    .create()
+                    val exitBtn = imageErrorView.findViewById<Button>(R.id.image_error_exit_button)
+                    exitBtn.setOnClickListener {
+                        imageErrorDialog.dismiss()
+                    }
+                    imageErrorDialog.setView(imageErrorView)
+                    imageErrorDialog.window!!.setBackgroundDrawableResource(R.drawable.rounded)
+                    imageErrorDialog.show()
+                } else {
+                    val errorView = layoutInflater.inflate(R.layout.ugatit_error, null)
 
-                val exitBtn = errorView.findViewById<Button>(R.id.ugatit_error_exit_button)
-                exitBtn.setOnClickListener {
-                    errorDialog.dismiss()
+                    val errorDialog = AlertDialog.Builder(context!!)
+                        .create()
+
+                    val exitBtn = errorView.findViewById<Button>(R.id.ugatit_error_exit_button)
+                    exitBtn.setOnClickListener {
+                        errorDialog.dismiss()
+                    }
+                    errorDialog.setView(errorView)
+                    errorDialog.window!!.setBackgroundDrawableResource(R.drawable.rounded)
+                    errorDialog.show()
                 }
-                errorDialog.setView(errorView)
-                errorDialog.window!!.setBackgroundDrawableResource(R.drawable.rounded)
-                errorDialog.show()
             }
 
             override fun onResponse(call: retrofit2.Call<UgatitPost>?, response: Response<UgatitPost>?) {

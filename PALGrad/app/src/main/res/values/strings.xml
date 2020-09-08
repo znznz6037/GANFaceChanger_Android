@@ -8,6 +8,7 @@
     <string name="no">아니요</string>
     <string name="terminate">종료</string>
     <string name="error">에러</string>
+    <string name="image_error_message">이미지를 업로드 해주세요.</string>
     <string name="ugatit_error_message">얼굴 인식에 실패하였습니다.\n다른 이미지를 올려주세요.</string>
     <string name="save">저장</string>
     <string name="result">결과</string>
